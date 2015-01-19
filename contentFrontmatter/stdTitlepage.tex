@@ -1,0 +1,107 @@
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% # Header für die Titelei
+% 		Quelle: Dokumentation für KOMA-Script
+%		Die Anmerkungen zu den einzelnen Optionen sind nicht vollständig,
+% 		im Zweifelsfall muss die offizielle Dokumentation herangezogen werden. 
+%
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+% Bei Standardklassen existiert maximal eine Titelseite mit den drei Angaben:
+% * Title	("\title")
+% * Autor ("\author")
+% * Datum ("\date")
+% 
+% Bei den KOMAScript-Klassen können mit "\maketitle" bis zu 6 Titelseiten
+% gesetzt werden. Außerdem  gibt es bei KOMAScript ein optionals nummerisches 
+% Argument. Weiter Erklärung: KOMAScript-Dokumentation S.66.
+% 
+% \maketitle[Seitenzahl(optional)]
+% 
+% Das Setzen der Titelei erfolgt immer durch "\maketitle". Alle Anweisungen
+% die den Inhalt der Titelei festlegt sind zwingend vor "\maketitle" zu verwenden.
+% Es ist nicht empfehlenswert diese Anweisungen in der Dokumentenpräambel
+% vor "\begin{document}" zu verwenden.
+% 
+% Anweisungen:
+% * \extratitel{schmutztitel}
+% 		Extraseite vor dem eigentlichen Haupttitel;
+% 		enthält Verlagsangaben, Buchreihennummer, ...
+% 	
+% 		Bei KOMAScript ist es möglich auf dem Schmutztitel beliebigen Text, 
+% 		auch mehrere Absätze, zu setzen.
+% 	
+% 		Beispiel:
+% 			\documentclass{scrbook}
+% 			\begin{document}
+% 				\extratitle{Me}
+% 				\title{It's me}
+% 				\maketitle
+% 				\end{document}
+% * \titlehead{Kopf} (Blocksatz, kann frei gestaltet werden)
+% * \subject{Typisierung}
+% * \title{Titel}
+% * \subtitle{Untertitel}
+% * \author{Autor}
+% * \date{Datum}
+% * \publishers{Verlag}
+% * \and
+% * \thanks{Fußnote}
+%
+%	Anmerkungen:
+%	* Um die Schriftstile der einzelnen Umgebungen zu ändern siehe Header
+%		der einzelnen Koma-Klassen scrrprt, scrbook und scrartcl. 
+%	* Bis auf "Kopf" und eventuelle Fußnoten werden alle Ausgaben hlrizontal 
+%		zentriert. (weitere Beispiele KOMAScript-Dokumentation S. 69)
+%	* Die Haupttitelseite ist nicht der Buchumschlag oder Buchdeckel!
+%		Es handelt sich aber um die Titelseite im Buchblock.
+%		Die Titelseite gehorcht den Randvorgaben für doppelseitige Satzspiegel.
+%		Der Buchdeckel (das Cover) wird in einem getrennten Dokument erstellt.
+%	* Allerdings kann die erste von "\maketitle" ausgegebene Titelseite
+%		alternativ auch als Umschlagseite formatiert werden:
+%			Option titlepage=firstiscover
+%
+%-------------------------------------------------------------------------------
+
+\titlehead{Kopf}
+\subject{Typisierung}
+\title{Titel}
+\subtitle{Untertitel}
+\author{Autor}
+\date{Datum}
+\publishers{Verlag}
+%\thanks{Fußnote} -- buggy
+
+
+%-------------------------------------------------------------------------------
+% Option: \uppertitleback{Titelrückseitenkopf}
+% Rückseitenkopf der (standarmäßig leeren) Hauptitelseite im zweiseitigen Druck.
+%
+%-------------------------------------------------------------------------------
+
+% \uppertitleback{Titelrückseitenkopf}
+
+%-------------------------------------------------------------------------------
+% Option: \lowertitleback{Widmung}
+% Rückseitenfuß der (standarmäßig leeren) Hauptitelseite im zweiseitigen Druck.
+%
+%-------------------------------------------------------------------------------
+
+% \lowertitleback{Titelrückseitenfuß}
+
+%-------------------------------------------------------------------------------
+% Option: \dedication{Widmung}
+% KOMAScript bietet eine Widmungsseite.
+%-------------------------------------------------------------------------------
+
+%\dedication{Widmung}
+
+%-------------------------------------------------------------------------------
+% Generierung der Titelei: \maketitle immer zum Schluss
+%-------------------------------------------------------------------------------
+
+\maketitle
+

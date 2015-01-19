@@ -1,0 +1,711 @@
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% # Header für die KOMAScript-Klasse "scrartcl"
+% 		Quelle: Dokumentation für KOMA-Script
+%		Die Anmerkungen zu den einzelnen Optionen sind nicht vollständig,
+% 		im Zweifelsfall muss die offizielle Dokumentation herangezogen werden. 
+%
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+
+\documentclass{scrartcl}
+
+%-------------------------------------------------------------------------------
+% ## Frühe oder späte Optionenwahl
+% 
+% Diese besonderheit betrifft alle KOMA-Script Pakete und Klassen.
+% 
+% * "normaler" Latex-Weg Optionen festzulegen:
+% 	\documentclass[Optionenliste(optional)]{KOMA-Script-Klasse}
+% 	\usepackage[Optionenliste(optional)]{Paket-Klasse}
+% 	Außer an die Klassen werden diese Optionen auch an alle Pakete 
+% 	weitergereicht die diese verstehen.
+% 
+% 		Optionenliste := [ Option_1, ... ,Option_n]
+% 
+% * KOMA-Script eigene Alternative:
+% 
+% 	Bei Komascript haben die meisten Optionen einen Wert:
+% 
+% 		Optionenliste := [ Option_1=Value_1, ..., Option_n=Value_n]
+% 
+% 	Bei Verwendung einer KOMA-Script Klasse ist das Laden der Pakete
+% 	"typearea" und "scrbase" überflüssig.
+% 
+% ### Wertzuweisungen von KOMA-Script Paketen:
+% 
+% Wertzuweisungen mit Latex-Längen und -Zählern sollten nie in Optionenlisten  
+% der Befehle "\documentclass" und "\usepackage" geschehen, sondern nur über die  
+% Befehle "\KOMAoptions{Optionenliste}" und "\KOMAoption{Option}{Werteliste}".
+% So können Werte nach dem Laden einer Klasse geändert werden.
+% Jede Option der Optionenliste hat die Form "Option=Wert". 
+% Besonderheit:
+% * Einige Optionen besitzten einen Säumniswert (engl. default value).
+% * Einige Optionen können meherer Werte besitzen;
+% 	diese können mehrfach durch Komma getrennt in der Optionenliste auftauchen.
+% * Soll ein Wert ein Gleichheitszeichen oder ein komma enthalten,
+% 	so ist der Wert in geschweifte Klammern zu setzen.
+% 
+% Standardwerte für alle einfachen Schalter in KOMA-Script
+%
+% 	Wert	Bedeutung
+%	----    ---------
+% 	true	aktiviert die Option
+% 	on		"-"
+% 	yes		"-"
+% 	false	deaktiviert die Option
+% 	off		"-"
+% 	no		"-"
+% 	
+%	Unterschied zwischen voreingestelltem Wert und default values:
+%	* Für alle Optionen des KOMAScript gibt es voreingestellte Werte.
+%	  	Diese werden verwendet wenn eine Option nicht explizit genannt wird.
+%	* Default values kommen nur bei Angabe einer Option ohne Wert zum Tragen.
+%
+%	Anmerkung zur Verwendung von Latex-Längen zur Berechnung von Werten:
+%	Die Verwendung einer Latex-Länge wie "\baselineskip" zur Berechnung 
+%	eines Wertes ist nicht deren Größe zum Zeitpunkt des Setzens der Option
+%	sondern zum Zeitpunkt der Berechnung ausschlaggebend.
+%	
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% 	Beispiel zur Optionenwahl:
+%		Standard-Klasse
+% 			\documentclass[a4paper]{report}
+%			\usepackage[BCOR=8.5mm, DIV=12]{typearea}
+%		Koma-Klasse (das explitize Laden von "typearea" entfällt)
+%			\documentclass[a4paper,BCOR=8.5mm]{scrrept}
+%			\documentclass{scrrpt}
+%			\KOMAoptions{BCOR=8.5mm, DIV=12}
+%
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% 	Option: draft = [true|false]
+%
+%	Schaltet den Entwursmodus ein oder aus.	
+%	* voreingestellter Wert: false
+%
+%	Entwursmodus:
+%	* überlange Zeilen werden mit schwarzen Kästchen markiert.
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{draft}{true}
+
+%-------------------------------------------------------------------------------
+% 	Option: fontsize = Größe [pt|em|...]
+%
+%	Legt die Größer der Grundschrift im Dokument fest.	
+%	* voreingestellter Wert: 11pt (Standardklassen 10pt)
+%	* Wird die Größe ohne Einheit angegeben wird pt als Einheit angenommen.
+%	* Wird die Option innerhalb des Dokuments gesetzt, so werden ab diesem 
+%	  	Punkt die Grundschriftgröße und alle davon abhängigen Größen geändert;
+%		allerdings sollte die Option keinesfalls als Ersatz für "fontsize"
+%		missverstanden werden!
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{fontsize}{11pt}
+
+%-------------------------------------------------------------------------------
+% 	Option: \setkomafont{Element}{Befehle}
+%			Schriftumschaltung eines Elements wird mit einer völlig neuen
+%			Definition versehen.
+%
+% 	Option: \addtokomafon{Element}{Befehle}
+%			Existierende Definition der Schriftumschaltung wird erweitert.
+%
+%	Die Befehle "\setkomafont" und "\addtokomafont" sollten nur in der 
+%	Dokumentenpräambel verwendet werden.
+%
+% 	Option: \usekomafont{Element}
+%			die aktuelle Schriftart kann auf diejenige umgeschaltet werden,
+%			die für das angegebene Element definiert ist.
+%			
+%			Beispiel:	
+%			Angenommen für das Element "captionlabel" soll dieselbe Schriftart
+%			woe für descriptionlaber verwendet werden.
+%		
+%			\setkomafont{captionlabel}{%
+%				\usekomafont{descriptionlabel}%
+%			}
+%
+%						
+%	Tabelle: 
+%	Als Argumente von "\setkomafont" und "\addtokomafont"  zulässige Befehle
+%	(Erklärungen ergänzen)
+%
+%	\normalfont
+%	\rmfamily
+%	\sffamily
+%	\ttfamily
+%	\mdseries
+%	\bfseries
+%	\upshape
+%	\itshape
+%	\slshape
+%	\scshape
+%	\Huge
+%	\huge
+%	\LARGE
+%	\Large
+%	\large
+%	\normalsize
+%	\small
+%	\footnotesize
+%	\scriptsize
+%	\tiny
+%	\normalcolor
+%
+%
+%	Tabelle: 
+%	Elemente deren Schrift bei scrbook, scrreprt, scrartcl 
+%	mit "\setkomafont" und "\addtokomafont" verändert werden können
+%		
+%	author
+%		Autorenangaben im Haupttitel des Dokuments mit \maketitle,
+%		also das Argument von "\author".
+%	caption
+%		text einer Abbildungs- oder Tabellenunter- oder -überschrift.
+%	captionlabel
+%		text einer Abbildungs- oder Tabellenunter- oder -überschrift;
+%		Anwendung erfolgt nach dem Element "caption".
+%	chapter
+%		Überschrift der Ebene "\chapter".
+%	chapterentry
+%		Inhaltsverzeichniseintrag der Ebene "\chapter"
+%	chapterentrypagenumber
+%		Seitenzahl des Inhaltsverzeichnseintrages der Ebene "\chapter"
+%		abweichend vom Element "\chapterentry".
+%	chapterprefix
+%		Kapitelnummernzeile bei Einstellungen "chapterprefix=true" oder
+%		"appendixprefix=true".
+%	date
+%		Datum im Haupttitel des Dokuments mit \maketitle,
+%		also das Argument von "\date".
+%	dedication
+%		Widmung nach dem Haupttitel des Dokuments mit "\maketitle";
+%		also das Argument von "\dedication".
+%	descriptionlabel
+%		Label, also das optionale Argument der "\item"-Anweisung
+%		in einer "description"-Umgebung.
+%	dictum
+%		mit "\dictum" gesetzter schlauer Spruch.
+%	dictumauthor
+%		Urheber des schlauen Spruchs;
+%		Anwendung erfolgt nach dem Element "dictum".
+%	dictumtext
+%		Alternative bezeichnung vür "dictum".
+%	disposition
+%		Alle Gliederungsüberschriften, also die Argumente von "\part" bis
+%		"\subgraph" und "\minisec" sowie die Überschrift der Zusammenfassung;
+%		Anwendung erfolgt vor dem Element der jeweiligen Gliederungsebene.
+%	footnote
+%		Marke und Text einer Fußnote.
+%	footnotelabel
+%		Marke einer Fußnote;
+%		Amwemdimg erfolgt nach dem Element "\footnote".
+%	footnotereference
+%		Referenzierung der Fußnotenmarke im Text.
+%	footnoterule
+%		Linie über dem Fußnotenapparat.
+%	labelinglabel
+%		Label, also das optionale Argument der "\item"-Anweisung,
+%		und Trennzeichen, also das optionale Element der "labeling"- Umgebung
+%		in einer "labeling"-Umgebung.
+%	labelingseparator
+%		Trennzeichen, also das optionale Argument der "labeling"-Umgebung,
+%		in einer "labeling"-Umgebung;
+%		Anwendung erfolgt nach dem Element "labelinglabel".
+%	minisec
+%		mit "\minisec" gesetzte Überschriften.
+%	pagefoot
+%		wird nur verwendet, wenn das Paket "scr-scrpage" oder "scrpage2"
+%		geladen ist.
+%	pagehead
+%		alternative Bezeichung für "pageheadfoot".
+%	pageheadfoot
+%		Seitenkopf und Seitenfuß bei allen von KOMAScript definierten
+%		Seitenstielen.
+%	pagenumber
+%		Seitenzahl im Kopf oder Fuß der Seite.
+%	pagination
+%		alternative Bezeichnung für "pagenumber". 
+%	paragraph
+%		Überschrift der Ebene "\paragraph".
+%	part
+%		Überschrift der Ebene "\part", jedoch ohne die Zeile 
+%		mit der Nummer des Teils.
+%	partentry
+%		Inhaltsverzeichnis der Ebene "\part".
+%	partentrypagenumber
+%		Seitenzahl des Inhaltsverzeichniseintrags der Ebene "\part"
+%	abweichend vom Element "partentry".
+%	partnumber
+%		Zeile mit der Nummer des Teils in Überschrift der Ebene "\part".
+%	publishers
+%		Verlagsangabe im Haupttitel des Dokuments mit "\maketitel",
+%		also das Argument von "\publishers".
+%	section
+%		Überschrift der Ebene "\section".
+%	sectionentry
+%		Inhaltsverzeichniseintrag der Ebene "\section"; 
+%		(nur scartcl).
+%	sectionentrypagenumber
+%		Seitenzahl des Inhaltsverzeichniseintrags der Ebene "\section"
+%		abweichend vom Element "sectionentry"; 
+%		(nur scartcl).
+%	sectioning
+%		alternative Bezeichnung für "disposition".
+%	subject
+%		Typisierung des Dokuments, also das Argument von "\subject"
+%		auf der Haupttitelseite mit "\maketitle".
+%	subparagraph
+%		Überschrift der Ebene "\subparagraph".
+%	subsection
+%		Überschrift der Ebene "\subsection".
+%	subsubsection
+%		Überschrift der Ebene "\subsubsection".
+%	subtitle
+%		Untertitel des Dokuments,
+%		also das Argument von "\subtitle" auf der Haupttitelseite mit 
+%		"\maketitel".
+%	titlehead
+%		Kopf über dem Haupttitel des Dokuments, 
+%		also das Argument von "\titlehead" auf der Haupttitelseite mit 
+%		"\maketitel". 
+%
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+% 	Option: titleapge = [true|false|firstincover]
+%
+%	Die Anweisung "\maketitle" verwendet "titlepage"-Umgebungen zum Setzen 
+%	dieser Seiten, die normalerweise weder Seitenkopf noch Seitenfuß enthalten.
+%
+%	* "true":
+%		Mit dieser Option wird ausgewählt, ob dür die mit "\maketitle" 
+%		gesetzte Titelei eigene Seiten verwendet werden, oder statdessen die 
+%		Titelei von "\maketitle" als Titelkopf gesetz wird.
+%
+%	* "false":
+%		Ist diese Option deaktiviert wird die Titelei lediglich speizell 
+%		hervorgehoben, auf der Seite mit dem Titel kann aber weiteres Material
+%		gesetz werden.
+%
+%	* "firstincover":
+%		Titelseiten werden aktiviert und die erste von "\maketitel" ausgegeben 
+%		Titelseite als (Schmutztitel oder Haupttitel) wird als Umschlagseite
+%		ausgegeben.		
+%
+%		Die Ränder dieser Umschlagseite werden über 
+%		*	"\coverpagetopmargin" 		(oberer Rand)
+%		*	"\coverpageleftmargin" 		(linker Rand)
+%		*	"\coverpagerightmargin" 	(rechter Rand)
+%		*	"\coverpagebottommargin" 	(rechter Rand)
+%	
+%			Die Voreinstellungen sind von den Längen "\topmargin" und 
+%			"\evensidemargin" abhängig und können mit renewcomand geändert werden.
+%	
+%	* voreingestellter Wert: false
+%	* default value: "true"
+%
+%	Anmerkungen: 
+%	* Bei KOMAScript wurde die Titelei gegenüber 
+%	* Alternativ zu den Standardtiteleien der Klasse kann eine eigene Titelei
+%		mit der "titlepage" Umgebung gestaltet werden. 
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{titlepage}{true}
+
+
+%-------------------------------------------------------------------------------
+%  	Option: abstract = [true|false]
+%
+%	* voreingestellter Wert: false
+%	* default value: "true"
+%
+%	Bei Artikeln oder Berichten findet man unmittelbar unter der Titelei und 
+%	vor dem Inhaltsverzeichnis eine Zusammenfassung.
+%	Bei Verwendung von Titelseiten wird die Zusammenfassung eher als Kapitel
+%	oder Abschnitt gesetzt, nicht für "scrbook" (siehe "\chapter*"). 
+%	Diese Option legt fest, ob die Zusammenfassung eine Überschrift bekommt oder 
+%	nicht aufgenommen wird oder nicht.
+%	
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{abstract}{true}
+
+
+%-------------------------------------------------------------------------------
+% 	# Absatzauszeichnung 
+%
+% 	Option: parskip=Methode 
+%	Diese Option legt die Absatzauszeichnung fest.	
+%	* voreingestellter Wert: false
+%	* default value: "true"
+%
+%	Varianten der Absatzauszeichung:
+%	* Absatzeinzug:
+%		+ bessere Absatzauszeichung als nur
+%		- kann anstrengend zu lesen sein
+%	* Absatzabstand:
+%		+ deutliche optische Trennung
+%		- kann in verschiedenem Zusammenhang leicht verloren gehen.
+%			(z.B. nach Formel, Seitenanfang, ...)
+%	
+%	Anmerkung:
+%	* Bei Verwendung eines normalen Satzspiegels ist eine Absatzauszeichung  
+%		durch Absatzeinzug und ohne Absatzabstand die vorteilhafteste Wahl 
+%		(Die Standardklassen setzen so).
+%	* Eine Kombination von Absatzeinzug und Absatzabstand ist wegen 
+%		übertriebener Redundanz nicht zu empfehlen.
+%
+%	Argumente:
+%	* [false | off | no]:
+%		Absätze werden durch einen Einzug der ersten Zeilen von einem 
+%		Geviert (1em) gekennzeichnet.
+%		Der erste Absatz eines Abschnitts wird nicht eingezogen.
+%	* Methode
+%	* never:
+%		Es wird kein Abstand zwischen Absätzen eingefügt, wenn für den 
+%		vertikalen Ausgleich der Einstellung "\flushbottom" zusätzlich 
+%		vertikaler Astand verteilt werden muss.
+%	
+%	Methode: Arg1Arg2
+%	Die Methode setzt sich aus zwei Teilen zusammen. 
+%	* Arg1:
+%		* [full | true | on | yes] (Methode Teil 1):
+%			Absätze werden durch einen vertikalen Abstand von einer Zeile 
+%			gekennzeichnet.
+%		* half (Methode Argument 1):
+%			Absätze werden durch einen vertikalen Abstand von einer Zeile 
+%			gekennzeichnet.
+%	* Arg2 (kann auch entfallen):
+%		"*": 		Ein Viertel der normalen Zeilenlänge wird freigelassen.
+%		"+": 		Ein Drittel der normalen Zeilenlänge wird freigelassen.
+%		"-": 		keine Vorkehrung
+%		default:	Lässt man das Zeichen weg wird in der letzten Zeile des 
+%					Absatzes mindestens ein Geviert (1 em) freigelassen.
+%
+%	Anmerkungen:
+%	* Wird ein Absatzabstand verwendet, so verändert sich auch der Abstanf vor,
+%		nach und innerhalb von Listenumgebungen. Dadurch wird verhindert, 
+%		dass diese Umgebbungen oder Absätze innerhalb dieser Umgebungen
+%		stärker vom Text abgesetzt werden als die Absätze des normalen
+%		Texts voneinander.
+%	* Die Einstellung kann jederzeit geändert werden.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{parskip}{true}
+		
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% 	# Kopf und Fuß bei vordefinierten Seitenstilen
+%
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%	Option: headsepline=[true|false]
+%			footsepline=[true|false]
+%
+%	* voreingestellter Wert: false
+%	* default value: "true"
+%
+%	Mit dieser Option kann eingestellt werden ob unter dem Kolumnentitel
+%	oder über dem Fuß eine horizontale Linie gewünscht wird.	
+%
+%	Anmerkungen:
+%	* Bei den Seitenstielen "empty" und "plain" hat die Option "headsepline"
+%		keine Auswirkungen, da hier auf einen Seitenkopf verzichtet werden soll.
+%	* Eine Linie hat Auswirkungen auf die Berechnung des Satzspiegels:
+%		* bei "headsepline" wird auch "headinclude" aktiviert.
+%		* bei "footsepline" wird auch "footinclude" aktiviert.
+%
+%-------------------------------------------------------------------------------
+
+
+% \KOMAoption{headsepline}{true}
+% \KOMAoption{footsepline}{true}
+	
+%-------------------------------------------------------------------------------
+%	Option: \pagestyle{Seitenstil}
+%		 	\thispagestyle{Seitenstil}
+%
+%	Üblicherweise wird zwischen vier Seitenstielen unterschieden:
+%	* empty:
+%		Kopf- und Fußzeile bleiben leer, identisch zu den Standardklassen.
+%	* headings:
+%		Seitenstiel für lebende Kolumnentitel (engl. running headline).
+%	* myheadings:
+%		Entspricht weitgehend dem Seitenstiel "headings, allerdings werden
+%		Kolumnentitel nicht automatisch erzeugt, sondern liegen in der 
+%		Verantwortung des Autors.
+%	* plain:
+%		Keinerlei Kolumnentitel, nur Seitenzahl wird ausgegeben.
+%		* einseitiger Satz: mittig im Fuß
+%		* doppelseitiger Satz: außen im Fuß
+%		
+%	Anmerkung:
+%	* Der Seitenstil kann jederzeit mit "\pagestyle" gesetzt werden.
+%	* Der Seitenstil eienr einzelnen Seite kann mit "\thispagestyle" 
+%		gesetzt werden.
+%		
+%	Tabelle:	
+%	Ausgezeichnete Seitenstile
+%	* "\titlepagestyle"
+%		Seitenstil der Titelei
+%	* "\partpagestyle"
+%		Seitenstil der Seiten mit "part"-Titeln
+%	* "\chapterpagestyle"
+%		Seitenstil der kapitelanfangseiten
+%	* "\indexpagestyle"
+%		Seitenstil der ersten Stichwortverzeichnisseite
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{pagestyle}{plain}
+
+%-------------------------------------------------------------------------------
+%	Option: \pagenumbering{Nummerierungsstil}
+%	
+%	Mit dieser Option kann de Nummerierungsstil angepasse werden. 
+%	
+%	Nummerierungsstile:
+%	* arabic:	arabische zahlen
+%	* roman:	kleine römische Zahlen
+%	* Roman: 	große römische Zahlen
+%	* alph:		Kleinbuchstaben
+%	* Alph:		Großbuchstaben
+%
+%	Anmerkungen:
+%	* Die Umschaltung gilt ab der Seite auf der die Anweisung aufgerugen wird.
+%	* Der Aufruf "\pagenumbering" setzt immer die Seitenanzahl zurück -
+%		die aktuelle Seite bekommt Nummer 1 des aktuellen Nummerierungsstils.
+%
+%-------------------------------------------------------------------------------
+
+% \pagenumbering{arabic}	
+
+%-------------------------------------------------------------------------------
+%	# Vakatseiten
+%
+%	Option: \cleardoublepage{Seitenstil}
+%
+%	Vakatseiten sind Seiten, die beim Satz eines Dokuments absichtlich leer 
+%	bleiben. Bei Latex werden sie jedoch in der Voreinstellung mit dem aktuell
+%	gültigen Seitenstil gesetzt; KOMAScript bietet diverse Erweiterungen.
+%
+%	Vakatseiten findet man hauptsächlich im doppelseitigen Satz,
+%	da Kaptiel immer auf der rechten Seite beginnen aber auch auf einer 
+%	rechten Seite enden können.
+%	
+%	Optionen S. 85 KOMAScript-Dokumentation
+%
+%-------------------------------------------------------------------------------
+
+% \cleardoublepage{plain}
+
+%-------------------------------------------------------------------------------
+%	# Fußnoten
+%
+%	Option: footnotes=Einstellung
+%	* voreingestellter Wert: nomultiple
+%	* default value: multiple
+%
+%	
+%	Einstellung:
+%		* multiple:
+%			Unmittelbar aufeinanderfolgende Fußnotenmarkierungen weren durch
+%			"\multfootsep" voneinander getrennt ausgegeben.
+%		* nomultiple:
+%			Unmittelbar aufeinander folgende Fußnotenmerkierungen werde auch 
+%			unmittelbar aufeinander folgend ausgegeben.
+%
+%	Anmerkungen:
+%	* Es ist jederzeit möglich die Einstellungen für die Fußnoten umzustellen
+%	* Weitere Einstellungsmöglichkeiten für Fußnoten ab 
+%		S.87 KOMAScript-Dokumentation
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{footnotes}{multiple}
+
+
+%-------------------------------------------------------------------------------
+%	# Abgrenzungen (Vorspann, Hauptteil, Nachspann)
+%
+%	Bei Büchern gibt es teilweise die Grobaufteilung in Vorspann, Hauptteil
+%	und Nachspann.
+%
+%	Entsprechungen in KOMASCript:	
+%	* \frontmatter:
+%		Vorspann, römische Nummerierung; 
+%		das Vorwort kann als normales Kapitel gesetzt werden (Kapitelnummer 0).
+%		(addsec und section* verwenden).
+%	* \mainmatter:
+%		Hauptteil, arabische Seitenzahlen, Seitenzälung beginnt neu mit 1;
+%		existiert kein Vorspann kann diese Anweisung entfallen.		
+%	* \backmatter:
+%		Nachspan, (standerdmäßig) keine getrennte Seitennummerierung -
+%		sollte diese nötig sein "pagenumbering verwenden";
+%		Was in den Anhang kommt ist unterschiedlich:
+%		manchmal nur Literaturverzeichnis, manchmal nur Index, 
+%		manchmal der komplette Anhang.
+%
+%
+%
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+%	# Gliederung
+%
+%	Die Standardgliederungsbefehle funktionieren bei den KOMAScript-Klassen wie
+%	bei den Standardklassen.
+%	In der Voreinstellung kan über ein optionales Argument ein abweichender Text
+%	für den Kolumnentitel und das Inhaltsverzeichnis vorgegeben werden.
+%	
+%	Tabelle:
+%	Gliederungsbefehle:
+%	* "\part[Kurzform]{Überschrift}"			nur scrbook, scrrprt
+%	* "\chapter[Kurzform]{Überschrift}"			nur scrbook, scrrprt
+%	* "\section[Kurzform]{Überschrift}"
+%	* "\subsection[Kurzform]{Überschrift}"
+%	* "\subsubsection[Kurzform]{Überschrift}"
+%	* "\paragraph[Kurzform]{Überschrift}"
+%	* "\subparagraph[Kurzform]{Überschrift}"
+%
+%	Anmerkungen:
+%	* Es können unterschiedliche Kurzformen für das Inhaltsverzeichnis und 
+%		den Kolumnentitel gewählt werden:
+%		
+%			\gliederungsbefehl[head=Kurzform1,tocentry=Kurzform2]{Überschrift}
+%	 
+%		Um ein Gleichheitszeichen oder ein Komma in einem dieser beien Werte 
+%		unterzubringen muss dieser in geschweifte klammern gesetzt werden.
+%	* Sternvarianten:
+%		Bei den Sternvarianten der Gliederungsbefehle erfolgt keine nummerierung,
+%		wird kein Kolumnentitel gesetzt und kein Eintrag im Inhaltsverzeichnis 
+%		vorgenommen:
+%
+%			\gliederungsbefehl*{Überschrift}
+%		
+%		Der Verzicht auf den Kolumnentitel hat oft den unerwünschten Effekt,
+%		das der Titel des letzten kapitels wieder auftaucht. 
+%		Lösung: add<gliederungsbefehl>
+%	* add<Gliederungsbefehl>[Kurzform]{Überschrift}, 
+%	  add<Gliederungsbefehl>*{Überschrift}
+%	  mit <Gliederungsbefehl> aus [part,chapter,sec]: 
+%		Diese Gliederungsbefehle gleichen den Gliederungsbefehlen der 
+%		Standardklassen, mit dem Unterschied, dass die Kolumnentitel 
+%		gelöscht werden - der Kolumnentitel bleibt leer.
+% 
+%	SemiGliederungsbefehl: "\minisec{Überschrift}"
+%		Hervorgehobene Überschrift die eng mit dem nachfolgenden Text zusammenhängt.
+%		Diese Überschrift ist keiner Gliederungsebene zugeordnet;
+%		sie wird nicht im Inhaltsverzeichnis aufgebommen und erhält keine 
+%		Nummerierung.
+%
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%	Option: headings = Einstellungen
+%
+%	Einstellung der Überschriftengröße. Eine Besonderheit von KOMAScript 
+%	betrifft die Behandlung des optionalen Arguments der Gliederungsbefehle.
+%	Sowohl dessen Funktionals auch dessen Bedeutung kann durch die 
+%	Einstellungen "headings=optiontohead", "headings=optiontotoc" und 
+%	"headings=optionstoheadandtoc" beeinflusst werden.
+%	
+%	Einstellungen
+%	* big:
+%		Große Überschriften mit großen Abständen darüber und darunter
+%	* normal:
+%		Mittelgroße Überschriften mit mittelgroßen Abständen darüber und darunter.
+%	* small: 
+%		Kleine Überschriften mit kleine Abständen darüber und darunter.
+%	* onlinechapter:
+%		Kapitelüberschriften werden wie andere Überschriften auch gesetzt.
+%	* twolinechapter:
+%		Kapitelüberschriften werden mit einer Vorsatzzeile gesetztm
+%		deren Inhalt von "\chapterformat" bestimmt wird.
+%	* onelineappendix:
+%		Kapitelüberschriften im Anhang werden wie andere Überschriften auch
+%		gesetzt.
+%	* twolineappendix:
+%		Kapitelüberschriften im Anhang werden mit einer Vorsatzzeile gesetztm
+%		deren Inhalt von "\chapterformat" bestimmt wird.
+%	* optiontohead:
+%		Die erweiterte Funktion des optionalen Arguments der Gliederungsbefehle
+%		wird aktiviert. In der Voreinstellung wird das optionale Argument 
+%		ausschließlich für den Kolumnentitel verwendet.
+%	* optiontoheadandtoc:
+%		Die erweiterte Funktion des optionalen Arguments der Gliederungsbefehle
+%		wird aktiviert.	In der Voreinstellung wird das optionale Argument 
+%		für den Kolumnentitel und die Eintragung ins Inhaltsverzeichnis 
+%		verwendet.
+%	* optiontotoc:
+%		Die erweiterte Funktion des optionalen Arguments der Gliederungsbefehle
+%		wird aktiviert. In der Voreinstellung wird das optionale Argument 
+%		ausschließlich für die Eintragung ins Inhaltsverzeichnis verwendet.
+%			
+%	Anmerkungen:
+%	* Die Abstände vor und nach den Kapitelüberschriften werden von dieser
+%		Einstellung ebenfalls beeinflusst.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{headings}{small}
+
+%-------------------------------------------------------------------------------
+%	Option: numbers = Einstellungen
+%	
+%	nach Duden:
+%	* Gliederungen mit ausschließlich arabischen Nummern:
+%		kein abschließender Punkt
+%	* Gliederungen sonst:
+%		abschließender Punkt.
+%		
+%	Einstellungen
+%	* autoendperiod:
+%		Automatismus
+%	* endperiod:
+%		Gliederungen werden mit Punkt beendet.
+%	* noendperiond:
+%		Gliederungen werden ohne Punkt beendet.
+%
+%	Anmerkungen:
+%	* Diese Option kann nur in der Präambel eingestellt werden.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{numbers}{autoendperiod}
+
+%-------------------------------------------------------------------------------
+%	Option: chapterlist = Wert
+%
+%	Normalerweise führt jeder mit "\chapter" und "\addchap" erzeugte  
+%	Kapiteleintrag einen vertikalen Abstand in die Verzeichnisse der 
+%	Gleitumgebung ein (siehe auch "listof").
+%	Mit der Option "chapterlists" kann der Abstand verändert werden.
+%
+%	Wert:
+%	* chaptergapsmall: 
+%		10pt
+%	* entry: 
+%		Statt des Abstandes wird der Kapiteleintrag in die Verzeichnisse
+%		aufgenommen. Dieser Eintrag erfolgt auch, wenn in dem Kapitel 
+%		keine Gleitumgebungen vorkommen.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{chapterlist}{entry}

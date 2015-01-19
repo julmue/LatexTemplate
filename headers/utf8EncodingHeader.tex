@@ -1,0 +1,22 @@
+% silences harmless warning message
+\usepackage[log-declarations=false]{xparse}
+
+%-------------------------------------------------------------------------------
+% package fontsepc:
+% * The "fontspec" package allows users of either XeTeX or LuaTeX to load  
+%	OpenType fonts in a LaTeX document. No font installation is necessary, and  
+%	font features can be selected and used as desired throughout the document.
+%-------------------------------------------------------------------------------
+\usepackage[quiet]{fontspec}
+
+%-------------------------------------------------------------------------------
+% package unicode-math:
+% * Maths input can be simplified with Unicode since literal glyphs may be
+%	entered instead of control sequences in your document source.
+% * allows for easy changing of maths fonts ( similar to changing text fonts
+%	with fontspec.
+% * hint:
+%	it needs to be loaded after any other math or font related package.
+%-------------------------------------------------------------------------------
+\usepackage{unicode-math}
+

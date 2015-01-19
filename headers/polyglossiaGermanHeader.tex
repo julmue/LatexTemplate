@@ -1,0 +1,27 @@
+%-------------------------------------------------------------------------------
+% package polyglossia:
+% * Polyglossia is a package for facilitating multilingual typeseing with 
+%	XƎLATEX and (at an early stage) LuaLATEX. Basically, it can be used as a 
+%	replacement of babel for performing the following tasks automatically:
+%	1.Loading the appropriate hyphenation patterns.
+%	2.Setting the script and language tags of the current font (if possible and
+%	  available), via the package fontspec.
+%	3.Switching to a font assigned by the user to a particular script or 
+%	  language.
+%	4.Adjusting some typographical conventions according to the current language 
+%	  (such as afterindent, frenchindent, spaces before or after punctuation  
+%	  marks, etc.).
+%	5.Redefining all document strings (like “chapter”, “figure”, 
+%	  “bibliography”).
+%	6.Adaptingtheformaingofdates(fornon-Gregoriancalendarsviaexternal packages 
+%	  bundled with polyglossia: currently the Hebrew, Islamic and Farsi 
+%	  calendars are supported).
+%	7.For languages that have their own numbering system, modifying the
+%	  formatting of numbers appropriately (this also includes redefining the 
+%	  alphabetic sequence for non-Latin alphabets).
+%	8.Ensuring proper directionality if the document contains languages that are
+%	  written from right to left (via the package bidi, available separately).
+%-------------------------------------------------------------------------------
+
+\usepackage{polyglossia}
+\setdefaultlanguage{german}

@@ -1,0 +1,384 @@
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% # Allgemeiner Header für KOMAScript-Dateien mit kurzer Dokumentation
+% 		Quelle: Dokumentation für KOMA-Script
+%		Die hier aufgeführten Optionen sind für alle KOMAScript Klassen gültig.
+%		Die Anmerkungen zu den einzelnen Optionen sind nicht vollständig,
+% 		im Zweifelsfall muss die offizielle Dokumentation herangezogen werden. 
+%
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+% ## Frühe oder späte Optionenwahl
+% 
+% Diese besonderheit betrifft alle KOMA-Script Pakete und Klassen.
+% 
+% * "normaler" Latex-Weg Optionen festzulegen:
+% 	\documentclass[Optionenliste(optional)]{KOMA-Script-Klasse}
+% 	\usepackage[Optionenliste(optional)]{Paket-Klasse}
+% 	Außer an die Klassen werden diese Optionen auch an alle Pakete 
+% 	weitergereicht die diese verstehen.
+% 
+% 		Optionenliste := [ Option_1, ... ,Option_n]
+% 
+% * KOMA-Script eigene Alternative:
+% 
+% 	Bei Komascript haben die meisten Optionen einen Wert:
+% 
+% 		Optionenliste := [ Option_1=Value_1, ..., Option_n=Value_n]
+% 
+% 	Bei Verwendung einer KOMA-Script Klasse ist das Laden der Pakete
+% 	"typearea" und "scrbase" überflüssig.
+% 
+% ### Wertzuweisungen von KOMA-Script Paketen:
+% 
+% Wertzuweisungen mit Latex-Längen und -Zählern sollten nie in Optionenlisten  
+% der Befehle "\documentclass" und "\usepackage" geschehen, sondern nur über die  
+% Befehle "\KOMAoptions{Optionenliste}" und "\KOMAoption{Option}{Werteliste}".
+% So können Werte nach dem Laden einer Klasse geändert werden.
+% Jede Option der Optionenliste hat die Form "Option=Wert". 
+% Besonderheit:
+% * Einige Optionen besitzten einen Säumniswert (engl. default value).
+% * Einige Optionen können meherer Werte besitzen;
+% 	diese können mehrfach durch Komma getrennt in der Optionenliste auftauchen.
+% * Soll ein Wert ein Gleichheitszeichen oder ein komma enthalten,
+% 	so ist der Wert in geschweifte Klammern zu setzen.
+% 
+% Standardwerte für alle einfachen Schalter in KOMA-Script
+%
+% 	Wert	Bedeutung
+%	----    ---------
+% 	true	aktiviert die Option
+% 	on		"-"
+% 	yes		"-"
+% 	false	deaktiviert die Option
+% 	off		"-"
+% 	no		"-"
+% 	
+%	Unterschied zwischen voreingestelltem Wert und default values:
+%	* Für alle Optionen des KOMAScript gibt es voreingestellte Werte.
+%	  	Diese werden verwendet wenn eine Option nicht explizit genannt wird.
+%	* Default values kommen nur bei Angabe einer Option ohne Wert zum Tragen.
+%
+%	Anmerkung zur Verwendung von Latex-Längen zur Berechnung von Werten:
+%	Die Verwendung einer Latex-Länge wie "\baselineskip" zur Berechnung 
+%	eines Wertes ist nicht deren Größe zum Zeitpunkt des Setzens der Option
+%	sondern zum Zeitpunkt der Berechnung ausschlaggebend.
+%	
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% ## Satzspiegelberechnung mit dem Paket typearea.sty
+% 
+% ### Grundlagen der Satzspiegelberechnung
+% (Alternative: geometry.sty)
+% "typearea.sty" berechnet den Satzspiegel anhand bestimmter typografischer 
+% Konstruktionsalgorithmen. Das gewünschte Ergebnis ist, dass der 
+% Satzspiegel (der Textkörper) dem Seitenverhältnis der Seite entspricht.
+% 
+% 1)	 Satzspiegelhöhe: satzspiegelbreite = Seitenhöhe: Seitenbreite
+% 2)		      oberer Rand: unterer Rand = 1 : 2
+% 3)		     linker Rand : rechter Rand = 1 : 1 (nur bei einseitigem Dokument)
+% 4)	  innerer Randanteil : äußerer Rand = 1:2 (nur bei beidseitigem Dokument)
+% 5)						   Seitenbreite = Papierbreite - Bindekorrektur
+% 6)		     oberer Rand + unterer Rand = Seitenhöhe - Satzspiegelhöhe
+% 7)		 	 linker Rand + rechter Rand = Seitenbreite - Satzspiegelbreite
+% 8)	  innerer Randanteil + äußerer Rand = Seitenbreite - Satzspiegelbreite
+% 9)	innerer Randanteil + Bindekorrektur = Bundsteg
+% 
+% Breite des Satzspiegels abhängig von:
+% 	* Größe, Laufweite und Art der verwendeten Schrift
+% 	* Durchschuss (Abstand der Textzeilen) 
+% 	  Bei größerem Durchschuss dürfen die Zeilen länger sein.
+% 	  Optimum ca. 60 - 70 Zeichen einschließlich Leer- und Satzzeichen.
+% 		-> anpassen mit Befehl "\linespread"; (besser) Paket "setspace" 
+% 			* Durchschuss darf nicht zu klein sein:
+% 				verfolgung der Zeile schwierig
+% 			* Durchschuss darf nicht zu groß sein:
+% 				Graueffekt der Seite gestört, wahrnehmbare Streifenbildung
+% 	* Länge der Worte
+% 	* verfügbarer Platz
+% 	
+% Für die Satzspiegelberechnung wichtige Eigenschaften von Latex:
+% * Vertikaler Beginn der ersten Zeile:
+% 	Latex beginnt die erste Zeile des Textbereichs einer Seite nicht am oberen 
+% 	Rand des Textbereichs, sondern setzt die Grundlinie der Zeile mit einem 
+% 	definierten Mindestabstand zum oberen Rand des Textbereichs.
+% * Vertikaler Abschluss der letzten Zeile:
+% 	* Befehl: "\raggedbottom"
+% 		Vertikaler Punkt der letzten Zeile einer Seite liegt nicht auf einem 
+% 		vorberstimmten Platz, sondern ist frei. 
+% 		Bei beidseitigem DrucK nicht erwünscht.
+% 	 * Befehl: "\flushbottom"
+% 		Letzte Zeile einer Seite liegt immer auf dem unteren Rand des 
+% 		Textbereichs. Dafür müssen geg. dehnbare Abstände (Absatzabstand,..) 
+% 		über das Maß gestreckt werden.
+% 		Um nicht unnötig eine Dehnung zu erzwingen sollte die Höhe des 
+% 		Textbereichs ein Vielfaches der Textzeilenhöhe zuzüglich des Abstandes
+% 		der ersten zeile vom oberen Rand des Textbereichs sein.
+% 
+% 
+% ### Satzspiegelkonstuktion durch Teilung
+% 
+% Berechnung des Textbereiches der die Bedingungen 1-9 erfüllt:
+% 1) Abzug BCOR (Bindekorrektur) von der Innenseite des Papiers.
+% 2) Vertikale Teilung der restlichen Seite in eine Anzahl DIV 
+% 	gleich breiter Streifen
+% 3) Horizontale Teilung der restlichen Seite in eine Anzahl DIV 
+% 	gleich breiter Streifen.
+% 4) oberer Rand = der oberste Streifen; 
+% 	unterer Rand = die untersten zwei Streifen
+% 5) einseitiger Druck:
+% 	rechter Rand = rechtester Streifen; linker Rand = linkester Streifen
+%    zweiseitiger Druck:
+% 	einseitiger Druck + 
+% 	innerer Rand = innerster vertikaler Streifen
+% 6) innerer Rand = innerer Rand + BCOR
+% 
+% Die Breite bzw. Höhe der Ränder des Textbereichs resultieren damit aus der 
+% Anzahl DIV (DIV >= 4) der Streifen.
+% 
+% 
+% ### Satzspieglekonstruktion durch Kreisschlagen
+% 
+% Bei diesem Verfahren will man die gleichen Werte nicht nur in Form des 
+% Seitenverhältnisses wiederfinden; man geht außerdem davon aus, dass das 
+% Optimum dann erreicht wird, wenn die Höhe des Textbereichs der Breiter der 
+% Seite entspricht.
+% Nachteil: die Breite des Textbereichs hängt nicht mehr von der Schriftart ab,
+% der Setzer muss due zum Textbereich passende Schrift wählen.
+% Beim "typearea"-Paket wird durch Auswahl eines ausgezeichneten DIV-Wertes 
+% oder einer speziellen Paketoption der DIV-Wert ermittel, bei dem der 
+% resultierende Satzspiegel dem Ideal der Satzspiegelkonstuktion durch
+% Kreisschlagen am nächsten kommt.
+% 
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% 	Beispiel zur Optionenwahl:
+%		Standard-Klasse
+% 			\documentclass[a4paper]{report}
+%			\usepackage[BCOR=8.5mm, DIV=12]{typearea}
+%		Koma-Klasse (das explitize Laden von "typearea" entfällt)
+%			\documentclass[a4paper,BCOR=8.5mm]{scrrept}
+%			\documentclass{scrrpt}
+%			\KOMAoptions{BCOR=8.5mm, DIV=12}
+%
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Option: BCOR = Korrektur[mm]
+%	* voreingestellter Wert: 0mm
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{BCOR}{0mm}
+
+%-------------------------------------------------------------------------------
+% Option: DIV = Faktor (Faktor >= 4)
+%	DIV-Voreinstellungen für A4 bei Verzicht auf BCOR:	
+%		Grundschriftgröße:	10pt	11pt	12pt
+%		DIV:				 8		10		12
+%	Achtung:
+%	* Die Grundeinstellungen können bei kleinen Schriftarten zu unangenehm 
+%		hohen Laufweiten führen - hier DIV berechnen lassen.
+%	* Bei anderen Papierformaten DIV berechnen lassen.	
+% 
+% Mögliche symbolische Werte für die Option DIV 
+% * areaset:
+% 		Satzspiegel neu anordnen
+% * calc:
+% 		DIV-Berechnung durch Satzspgkonstr. durch Teilung
+% * classic:
+% 		DIV-Berechnung durch Satzspgkonstr. durch Kreisschlagen
+% * current:
+% 		Satzspgkonstr. mit dem aktuelle gültigen DIV-Wert erneut durchführen
+% 		(nach Änderungen von ---)
+% * default:
+% 		Satzspgkonstr. mit dem Standardwert für das aktuelle Seitenformat und 
+% 		die aktuelle Schriftgröße erneut durchführen;
+% 		falls kein Standardwert existiert default andwenden.
+% * last:
+% 		Satzspiegelberechnung mit demselben DIV-Argument, das beim letzen
+% 		Aufruf angegeben wurde, erneut durchführen.
+%
+% Anmerkung:
+% *	Nach Änderung der Schriftart, Durchschuss o.ä. (auch fontenc) muss die  
+% 	Berechnung erneut durchgeführt werden.
+%	Beispiel:
+%		\documentclass[10pt, twoside, BCOR=12mm, DIV=calc]{scrreprt}
+%		\linespread{1.25}	oder \usepackage[onehalfspacing]{setspace}
+%		\KOMAoptions{DIV=last}
+% * Der Befehl \Typearea ist so definiert, dass es auch möglich ist,
+%		mitten in einem Dokument den Satzspiegel zu wechseln;
+%		dies führt allerdings zu einem Seitenumbruch.
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{DIV}{calc}
+
+%-------------------------------------------------------------------------------
+% Option: twoside=[true|false|semi]
+% 	Ein oder doppelseitiger Satz des Dokuments.
+%	* voreingestellter Wert: einseitig
+% 	* default: "true"
+% 	* semi führt zu doppelseitigem Satz mit einseitigen Rändern und einseitigen
+%		Marginalien.
+% 	* Eine Verwendung dieser Option nach dem Laden von typearea führt automatisch 	
+%		zu einer Neuberechnung des Satzspiegels mittels \rectaltypearea.
+%	* Verwendung von doppelseitigem Satz führt automatisch zur Verwendung 
+%		von "\flushbottom".
+%	* Verwendung von einseitigem Satz führt automatisch zur Verwendung 
+%		von "\raggedbottom".
+%	
+%-------------------------------------------------------------------------------
+
+\KOMAoption{twoside}{false}
+
+%-------------------------------------------------------------------------------
+% Option: twocolumn=[true|false]
+%	Ein oder doppelspaltiger Satz des Dokuments.
+%	* voreingestellter Wert: einspaltig
+% 	* default: "true"
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{twocolumn}{false}
+
+%-------------------------------------------------------------------------------
+% Option: headinclude=[true|false]
+%	Beim oberen und unteren Rand stellt sich die Frage wie Kopf- und 
+%	Fußzeile zu behandeln sind. Gehören diese zum Textkörper oder zum 
+%	jeweiligen Rand? Entscheiden ist, wie eine wohlgefüllte Seite bei 
+%	unscharfer Betrachtung wirkt.
+%	* leerer Kopf und leerer Fuß werden immer zum Rand gerechnet.
+%
+%	Oberer Rand:
+%   * voreingestellter Wert: meist "false" (abhängig von der Klasse und Paketen)
+%	* default value: "true"
+%  	* Anhaltspunkte für den oberen Rand:
+%	 	In der Kopfzeile wird häufig der Kolumnentitel gesetzt 
+% 	 	(Kolumnentitel: wiederholung einer Überschrift mit Titelcharakter)
+%	 	* lebende Kolumnentitel (+ Paginierung im Kopf):
+%			eher zum Text gehörig.
+%		 * schwierig: 
+%			Paginierung im Fuß und sehr stark schwankende Länge der 
+%			Kolumnentitel. Im Zweifelsfall Kopf zum Textkörper.
+%		 * Bei Abtrennung des Kopfes durch eine geschlossene Linie:
+%			unbedint zum Textkörper rechnen.
+%		* default value = true
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{headinclude}{false}
+
+%-------------------------------------------------------------------------------
+% Option: headinclude=[true|false]
+%	Beim oberen und unteren Rand stellt sich die Frage wie Kopf- und 
+%	Fußzeile zu behandeln sind. Gehören diese zum Textkörper oder zum 
+%	jeweiligen Rand? 
+%
+%	Unterer Rand:
+%   * voreingestellter Wert: meist "false" (abhängig von der Klasse und Paketen)
+%	* default value: "true"
+%	* Anhaltspunkte für den unteren Rand:
+%		* Fuß der nur die Paginierung enthält sollte zum Rand gerechnet werden.
+%
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{footinclude}{false}
+
+%-------------------------------------------------------------------------------
+% Option: mpinclude=[true|false]
+%	Option die festlegt ob Randnotizen zum Text gehören oder nicht.
+%	Eine Breiteneinheit wird vom Text weggenommen und für Randnotizen verwendet. 
+%	* voreingestellter Wert: "false"
+%	* default value: "true"
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{mpinclude}{false}
+
+%-------------------------------------------------------------------------------
+% Option .1: headlines=Zeilenanzahl
+%	Anzahl der Zeilen in der Kopfzeile.
+%	* voreingestellter Wert: 1.25 (meist gut für unterstrichene 
+%										und nicht unterstrichene Kopfzeilen)
+%	* default value: "true"
+%
+% Option .1: headheight=
+%	* voreingestellter Wert:
+%	* default value:
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{headlines}{1.25}
+
+%-------------------------------------------------------------------------------
+% Option .1: footlines=Zeilenanzahl
+%	Anzahl der Zeilen in der Kopfzeile.
+%	* voreingestellter Wert: 1.25 (meist gut für unterstrichene 
+%										und nicht unterstrichene Fußzeilen)
+%	* default value: "true"
+%
+% Option .2: foodheight=
+%	* voreingestellter Wert:
+%	* default value:
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAoption{foodlines}{1.25}
+
+%-------------------------------------------------------------------------------
+% Weitere hier undokumentierte Optionen:
+%	Befehl "\areaset"
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Option .1: paper=format [letter|legal|executive|an|bn|cn|dn] mit n aus Nat.
+%	Einstellung des Papierformats
+%	* voreingestellter Wert: a4
+%	* default value: a4
+%
+% Option .2: paper=format [landscape|seascape|portrait] mit n aus Nat.
+%	Einstellung des Papierformats
+%	* voreingestellter Wert: portrait
+%	* default value: lanscape
+%
+%	Eine Änderung führt nicht zur automatischen Neuberechnung des 
+%	Seitenspiegels.
+%
+%-------------------------------------------------------------------------------
+
+\KOMAoption{paper}{a4,portrait}
+
+
+%-------------------------------------------------------------------------------
+% Weitere hier undokumentierte Optionen:
+%	Befehl "\pagesize"
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+% Wiederholung der Seitenspiegelberechnung mit allen Angaben
+%-------------------------------------------------------------------------------
+
+\KOMAoption{DIV}{last}

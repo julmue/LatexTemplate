@@ -1,0 +1,108 @@
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% # Inhalt des Inhaltsverzeichnisses (engl. table of contents).
+% 	Optionen für das Inhaltsverzeichnis.
+%	Häufig findet man nach dem Inhaltsverzeichnis auch noch die Verzeichnisse  
+%	der Gleitumgebungen, beispielsweise von Tabellen und Abbildungen.
+%
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Option: toc=[listof|listofnumered|nolistof] 
+%
+% * listof:
+%		Aufnahme des Abbildungs- und Tabellenverzeichnisses ins 
+%		Inhaltsverzeichnis (Wenn diese am Buchende stehen).
+%		Dabei werden auch Verzeichnisse berücksichtigt, die mit Hilfe des 
+%		"float"-Pakets oder "floatrow" erstellt werden.
+% * listofnumered:
+%		Diese Verzeichnisse erhalten Grundsätzlich keine Kapitelnummern.
+%		"listofnumbered" hebt das auf.
+% * nolistof:
+%		Keine Aufnahme des Abbildungs- und Tabellenverzeichnisses ins 
+%		Inhaltsverzeichnis (Wenn diese am Buchende stehen).
+%		Dabei werden auch Verzeichnisse berücksichtigt, die mit Hilfe des 
+%		"float"-Pakets oder "floatrow" erstellt werden.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAOption{toc}{listof}
+
+%-------------------------------------------------------------------------------
+% Option: toc=[index|noindex  
+%
+% * index:
+%		Aufnahme des Stichwortverzeichnisses ins Inhaltsverzeichnis.
+%		Eine Kapitelnummer für dieses Verzeichnis wird nicht unterstützt.
+% * noindex:
+%		Keine Aufnahme des Stichwortverzeichnisses ins Inhaltsverzeichnis.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAOption{toc}{index}
+
+%-------------------------------------------------------------------------------
+% Option: toc=[bibliography|bibliographynumbered|nobibliography]  
+%
+% * bibliography:
+%		Eintragung des Literaturverzeichnis ins Inhaltsverzeichnis.
+% * bibliographynumbered:
+%		Vergabe einer Kapitelnummer für das Literaturverzeichnis und 
+%		Eintragung ins Inhaltsverzeichnis.
+% * nobibliography:
+%		Keine Eintragung des Literaturverzeichnis ins Inhaltsverzeichnis.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAOption{toc}{listof}
+
+%-------------------------------------------------------------------------------
+% Option: toc=[ graduated | indent | indented | flat| left]
+%
+% * [graduated | indent | indented]: 
+%		Normalerweise wird das Inhaltsverzeichnis so formatiert, dass die 
+%		Gliederungsebenen untersciedlich weit eingeszogen werden.
+% * [flat | left]:
+%		Werden viele Gliederungspunkte verwendet, so werden Gliederungsnummern
+%		sehr breit - der vorgesehen Platz reicht nicht aus.
+%		"flat" schaltet den Unterschiedlichen Einzug der Gliederungspunkte aus.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAOption{toc}{graduated}
+
+%-------------------------------------------------------------------------------
+% Option: toc=[numberline|nonumberline]
+%
+% * numberline:
+%	Die Eigenschaft "numberline" wird für das Inhaltsverzeichnis gesetzt.
+%	Dadurch werden nicht nummerierte Einträge linksbündig mit dem Text von
+%	nummerierten Einträgen gleicher Ebene gesetzt.
+% * nonumberline (Voreinstellung):
+%	Die Eigenschaft numberline wird für das Inhaltsverzeichnis gelöscht.
+%
+%-------------------------------------------------------------------------------
+
+% \KOMAOption{toc}{numberline}
+
+
+%-------------------------------------------------------------------------------
+% Option: tocdepth=[numberline|nonumberline]
+%	Durch Setzen dieses Zählers kann bestimmt werden, bis zu welcher 
+%	Gliederungsebene Einträge in das Inhaltsverzeichnis erfolgen sollen.
+%	-1: part
+%	 0: chapter
+%	 ...
+%	 
+%-------------------------------------------------------------------------------
+
+% \KOMAOption{tocdepth}{2}
+
+%-------------------------------------------------------------------------------
+% Generierung des Inhaltsverzeichnisses;
+%	Zur korrekten Wiedergabe sind mindestens zwei Latex-Läufe notwendig.
+%-------------------------------------------------------------------------------
+
+
+\tableofcontents

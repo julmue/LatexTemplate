@@ -1,0 +1,44 @@
+%-------------------------------------------------------------------------------
+% PreClass Headers ("\RequirePackage{<packageName>}")
+
+include(fixltx2eHeader.tex)
+include(nagHeader.tex)
+
+%-------------------------------------------------------------------------------
+% Class Headers ("\documentclass{<className>}")
+
+include(scrartclHeader.tex)
+include(komaHeader.tex)
+
+%-------------------------------------------------------------------------------include(amsmathHeader.tex)
+% Essential Packages ("\usepackage{<packageName>}")
+
+include(utf8EncodingHeader.tex)
+include(polyglossiaGermanHeader.tex)
+include(microtypeHeader.tex)
+include(lipsumHeader.tex)
+
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% Document
+
+\begin{document}
+
+%===============================================================================
+% Frontmatter
+include(stdTitlepage.tex)
+include(abstract.tex)
+include(tableOfContents.tex)
+%------------------------------------------------------------------------------_
+
+%===============================================================================
+% Mainmatter
+include(chapterDummy.tex)
+%-------------------------------------------------------------------------------
+
+%===============================================================================
+% Backmatter
+%-------------------------------------------------------------------------------
+
+\end{document}
+%------------------------------------------------------------------------------_
