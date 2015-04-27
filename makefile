@@ -29,7 +29,7 @@ xelatexOptions = -halt-on-error -file-line-error
 
 pdf: $(docName).tex
 	xelatex $(xelatexOptions) $<
-	# bibtex $(doc_name)
+	bibtex8 $(docName).aux
 	# makeindex main.idx
 	xelatex $(xelatexOptions) $<
 

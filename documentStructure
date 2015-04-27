@@ -1,3 +1,6 @@
+% m4 directive to not choke on unbalanced quotes
+changequote(`[[[', `]]]')
+
 %-------------------------------------------------------------------------------
 % PreClass Headers ("\RequirePackage{<packageName>}")
 
@@ -17,6 +20,8 @@ include(utf8EncodingHeader.tex)
 include(polyglossiaGermanHeader.tex)
 include(microtypeHeader.tex)
 include(lipsumHeader.tex)
+include(bibliographyHeader.tex)
+include(customMacrosHeader.tex)
 
 %-------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------
@@ -26,6 +31,9 @@ include(lipsumHeader.tex)
 
 %===============================================================================
 % Frontmatter
+
+\pagenumbering {roman}
+
 include(stdTitlepage.tex)
 include(abstract.tex)
 include(tableOfContents.tex)
@@ -33,6 +41,8 @@ include(tableOfContents.tex)
 
 %===============================================================================
 % Mainmatter
+\newpage
+\pagenumbering {arabic}
 include(chapterDummy.tex)
 %-------------------------------------------------------------------------------
 

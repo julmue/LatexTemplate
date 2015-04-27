@@ -1,3 +1,7 @@
+*.xml
+*.bib
+*.blg
+*.bbl
 *.aux
 *.log
 *.out

@@ -1,0 +1,53 @@
+% ----------------------------------------------------------------------
+% lengths
+\newlength{\sdistance}
+\setlength{\sdistance}{5pt}
+
+\newlength{\ldistance}
+\setlength{\ldistance}{12pt}
+
+% ----------------------------------------------------------------------
+% commands
+\newcommand{\concept}[1]{%
+	\sf{%
+		\textbf{%
+				\textcolor{mymauve}{#1}%
+		}%
+	}%
+	\rm%
+}
+
+% ----------------------------------------------------------------------
+% environments
+
+\newenvironment{entitiyDef}[1]%
+{	\hrule
+	\vspace{\sdistance}
+	\textbf{Definition:} \concept{#1}}%
+{\vspace{\sdistance}
+\hrule
+\vspace{\sdistance}}
+
+\newenvironment{entityProp}[2]%
+{	\hrule
+	\vspace{\sdistance}	
+	\textbf{Definition:} \concept{#1},\concept{#2}}%
+{\vspace{\sdistance}
+\hrule
+\vspace{\sdistance}}
+
+\newenvironment{algorithm}[1]%
+{	\textbf{Algorithmus:} \concept{#1}}%
+{}
+
+\newenvironment{comment}%
+{\color{mygray}}
+{\vspace{\sdistance}}
+
+\newenvironment{question}%
+{\color{yellow}}
+{\color{black}}
+
+\newenvironment{explanation}%
+{\color{red}}
+{\color{black}}
